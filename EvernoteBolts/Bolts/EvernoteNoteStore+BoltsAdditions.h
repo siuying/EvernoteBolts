@@ -557,125 +557,62 @@
 - (BFTask*)sendMessageToSharedNotebookMembersAsyncWithGuid:(EDAMGuid)guid
                                                messageText:(NSString *)messageText
                                                 recipients:(NSMutableArray *)recipients;
-@end
-
-@interface EvernoteNoteStore (BoltsAdditionsTODO)
 
 /** Lists the collection of shared notebooks for all notebooks in the users account.
- 
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)listSharedNotebooksWithSuccess:(void(^)(NSArray *sharedNotebooks))success
-                               failure:(void(^)(NSError *error))failure;
-
-/** Expunges the SharedNotebooks in the user's account using the SharedNotebook.id as the identifier.
- 
- NOTE: This function is not available to third party applications. Calls will result in an EDAMUserException with the error code PERMISSION_DENIED.
- 
- @param sharedNotebookIds a list of ShardNotebook.id longs identifying the objects to delete permanently.
- @param success Success completion block.
- @param failure Failure completion block.
- */
-- (BFTask*)expungeSharedNotebooksWithIds:(NSMutableArray *)sharedNotebookIds
-                              success:(void(^)(int32_t usn))success
-                              failure:(void(^)(NSError *error))failure;
+- (BFTask*)listSharedNotebooksAsync;
 
 /** Asks the service to make a linked notebook with the provided name, username of the owner and identifiers provided.
  
  A linked notebook can be either a link to a public notebook or to a private shared notebook.
  
  @param  linkedNotebook The desired fields for the linked notebook must be provided on this object. The name of the linked notebook must be set. Either a username uri or a shard id and share key must be provided otherwise a EDAMUserException is thrown.
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)createLinkedNotebook:(EDAMLinkedNotebook *)linkedNotebook
-                     success:(void(^)(EDAMLinkedNotebook *linkedNotebook))success
-                     failure:(void(^)(NSError *error))failure;
+- (BFTask*)createLinkedNotebookAsync:(EDAMLinkedNotebook *)linkedNotebook;
 
 /** Asks the service to update a linked notebook.
  
  @param  linkedNotebook Updates the name of a linked notebook.
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)updateLinkedNotebook:(EDAMLinkedNotebook *)linkedNotebook
-                     success:(void(^)(int32_t usn))success
-                     failure:(void(^)(NSError *error))failure;
+- (BFTask*)updateLinkedNotebookAsync:(EDAMLinkedNotebook *)linkedNotebook;
 
 /** Returns a list of linked notebooks
- 
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)listLinkedNotebooksWithSuccess:(void(^)(NSArray *linkedNotebooks))success
-                               failure:(void(^)(NSError *error))failure;
-
-/** Permanently expunges the linked notebook from the account.
- 
- NOTE: This function is not available to third party applications. Calls will result in an EDAMUserException with the error code PERMISSION_DENIED.
- 
- @param  guid The LinkedNotebook.guid field of the LinkedNotebook to permanently remove from the account.
- @param success Success completion block.
- @param failure Failure completion block.
- */
-- (BFTask*)expungeLinkedNotebookWithGuid:(EDAMGuid)guid
-                              success:(void(^)(int32_t usn))success
-                              failure:(void(^)(NSError *error))failure;
+- (BFTask*)listLinkedNotebooksAsync;
 
 /** Asks the service to produce an authentication token that can be used to access the contents of a shared notebook from someone else's account.
  
  This authenticationToken can be used with the various other NoteStore calls to find and retrieve notes, and if the permissions in the shared notebook are sufficient, to make changes to the contents of the notebook.
  
  @param  shareKey The 'shareKey' identifier from the SharedNotebook that was granted to some recipient. This string internally encodes the notebook identifier and a security signature.
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)authenticateToSharedNotebookWithShareKey:(NSString *)shareKey
-                                         success:(void(^)(EDAMAuthenticationResult *result))success
-                                         failure:(void(^)(NSError *error))failure;
+- (BFTask*)authenticateToSharedNotebookAsyncWithShareKey:(NSString *)shareKey;
 
 /** This function is used to retrieve extended information about a shared notebook by a guest who has already authenticated to access that notebook.
  
  This requires an 'authenticationToken' parameter which should be the resut of a call to authenticateToSharedNotebook(...). I.e. this is the token that gives access to the particular shared notebook in someone else's account -- it's not the authenticationToken for the owner of the notebook itself.
- 
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)getSharedNotebookByAuthWithSuccess:(void(^)(EDAMSharedNotebook *sharedNotebook))success
-                                   failure:(void(^)(NSError *error))failure;
+- (BFTask*)getSharedNotebookByAuthAsync;
 
 /** Attempts to send a single note to one or more email recipients.
  
  @param  parameters The note must be specified either by GUID (in which case it will be sent using the existing data in the service), or else the full Note must be passed to this call. This also specifies the additional email fields that will be used in the email.
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)emailNoteWithParameters:(EDAMNoteEmailParameters *)parameters
-                        success:(void(^)())success
-                        failure:(void(^)(NSError *error))failure;
+- (BFTask*)emailNoteWithParametersAsync:(EDAMNoteEmailParameters *)parameters;
 
 /** If this note is not already shared (via its own direct URL), then this will start sharing that note.
  
  This will return the secret "Note Key" for this note that can currently be used in conjunction with the Note's GUID to gain direct read-only access to the Note. If the note is already shared, then this won't make any changes to the note, and the existing "Note Key" will be returned. The only way to change the Note Key for an existing note is to stopSharingNote first, and then call this function.
  
  @param  guid The GUID of the note to be shared.
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)shareNoteWithGuid:(EDAMGuid)guid
-                  success:(void(^)(NSString *noteKey))success
-                  failure:(void(^)(NSError *error))failure;
+- (BFTask*)shareNoteAsyncWithGuid:(EDAMGuid)guid;
 
 /** If this note is not already shared then this will stop sharing that note and invalidate its "Note Key", so any existing URLs to access that Note will stop working. If the Note is not shared, then this function will do nothing.
  
  @param  guid The GUID of the note to be un-shared.
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)stopSharingNoteWithGuid:(EDAMGuid)guid
-                        success:(void(^)())success
-                        failure:(void(^)(NSError *error))failure;
+- (BFTask*)stopSharingNoteAsyncWithGuid:(EDAMGuid)guid;
 
 /** Asks the service to produce an authentication token that can be used to access the contents of a single Note which was individually shared from someone's account.
  
@@ -684,35 +621,23 @@
  @param  guid The GUID identifying this Note on this shard.
  @param  noteKey The 'noteKey' identifier from the Note that was originally created via a call to shareNote() and then given to a recipient to access.
  @param authenticationToken Optional, only required for Yinxiang
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)authenticateToSharedNoteWithGuid:(NSString *)guid
-                                 noteKey:(NSString *)noteKey
-                     authenticationToken:(NSString*)authenticationToken
-                                 success:(void(^)(EDAMAuthenticationResult *result))success
-                                 failure:(void(^)(NSError *error))failure;
+- (BFTask*)authenticateToSharedNoteAsyncWithGuid:(NSString *)guid
+                                         noteKey:(NSString *)noteKey
+                             authenticationToken:(NSString*)authenticationToken;
 
 /** Update a SharedNotebook object.
  
  @param  sharedNotebook The SharedNotebook object containing the requested changes. The "id" of the shared notebook must be set to allow the service to identify the SharedNotebook to be updated. In addition, you MUST set the email, permission, and allowPreview fields to the desired values. All other fields will be ignored if set.
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*)updateSharedNotebook:(EDAMSharedNotebook *)sharedNotebook
-                     success:(void(^)(int32_t usn))success
-                     failure:(void(^)(NSError *error))failure;
+- (BFTask*)updateSharedNotebookAsync:(EDAMSharedNotebook *)sharedNotebook;
 
 /** Set shared notebook recipient settings.
  
  @param sharedNotebookId The shared notebooks id
  @param recipientSettings The settings of the recipient
- @param success Success completion block.
- @param failure Failure completion block.
  */
-- (BFTask*) setSharedNotebookRecipientSettingsWithSharedNotebookId: (int64_t) sharedNotebookId
-                                              recipientSettings: (EDAMSharedNotebookRecipientSettings *) recipientSettings
-                                                        success:(void(^)(int32_t usn))success
-                                                        failure:(void(^)(NSError *error))failure;
+- (BFTask*) setSharedNotebookRecipientSettingsAsyncWithSharedNotebookId: (int64_t) sharedNotebookId
+                                              recipientSettings: (EDAMSharedNotebookRecipientSettings *) recipientSettings;
 
 @end

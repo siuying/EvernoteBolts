@@ -672,4 +672,139 @@
     return task.task;
 }
 
+- (BFTask*)listSharedNotebooksAsync
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self listSharedNotebooksWithSuccess:^(NSArray *sharedNotebooks) {
+        [task setResult:sharedNotebooks];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*)createLinkedNotebookAsync:(EDAMLinkedNotebook *)linkedNotebook
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self createLinkedNotebook:linkedNotebook success:^(EDAMLinkedNotebook *linkedNotebook) {
+        [task setResult:linkedNotebook];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*)updateLinkedNotebookAsync:(EDAMLinkedNotebook *)linkedNotebook
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self updateLinkedNotebook:linkedNotebook success:^(int32_t usn) {
+        [task setResult:@(usn)];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*)listLinkedNotebooksAsync
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self listLinkedNotebooksWithSuccess:^(NSArray *linkedNotebooks) {
+        [task setResult:linkedNotebooks];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*)authenticateToSharedNotebookAsyncWithShareKey:(NSString *)shareKey
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self authenticateToSharedNotebookWithShareKey:shareKey success:^(EDAMAuthenticationResult *result) {
+        [task setResult:result];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*)getSharedNotebookByAuthAsync
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self getSharedNotebookByAuthWithSuccess:^(EDAMSharedNotebook *sharedNotebook) {
+        [task setResult:sharedNotebook];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*)emailNoteWithParametersAsync:(EDAMNoteEmailParameters *)parameters
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self emailNoteWithParameters:parameters success:^{
+        [task setResult:nil];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*)shareNoteAsyncWithGuid:(EDAMGuid)guid
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self shareNoteWithGuid:guid success:^(NSString *noteKey) {
+        [task setResult:noteKey];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*)stopSharingNoteAsyncWithGuid:(EDAMGuid)guid
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self stopSharingNoteWithGuid:guid success:^{
+        [task setResult:nil];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*)authenticateToSharedNoteAsyncWithGuid:(NSString *)guid
+                                         noteKey:(NSString *)noteKey
+                             authenticationToken:(NSString*)authenticationToken
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self authenticateToSharedNoteWithGuid:guid noteKey:noteKey authenticationToken:authenticationToken success:^(EDAMAuthenticationResult *result) {
+        [task setResult:result];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*)updateSharedNotebookAsync:(EDAMSharedNotebook *)sharedNotebook
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self updateSharedNotebook:sharedNotebook success:^(int32_t usn) {
+        [task setResult:@(usn)];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
+- (BFTask*) setSharedNotebookRecipientSettingsAsyncWithSharedNotebookId: (int64_t) sharedNotebookId
+                                                      recipientSettings: (EDAMSharedNotebookRecipientSettings *) recipientSettings
+{
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    [self setSharedNotebookRecipientSettingsWithSharedNotebookId:sharedNotebookId recipientSettings:recipientSettings success:^(int32_t usn) {
+        [task setResult:@(usn)];
+    } failure:^(NSError *error) {
+        [task setError:error];
+    }];
+    return task.task;
+}
+
 @end
