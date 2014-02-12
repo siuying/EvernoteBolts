@@ -82,9 +82,6 @@
 ///---------------------------------------------------------------------------------------
 
 /** Returns a list of all of the notebooks in the account.
- 
- @param success Success completion block.
- @param failure Failure completion block.
  */
 - (BFTask*)listNotebooksAsync;
 
