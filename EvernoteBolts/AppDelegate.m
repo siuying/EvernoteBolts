@@ -7,15 +7,64 @@
 //
 
 #import "AppDelegate.h"
+#import "EvernoteSDK.h"
+#import "EvernoteNoteStore+BoltsAdditions.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    EvernoteNoteStore* notestore = [EvernoteNoteStore noteStore];
+    [notestore getDefaultNotebookWithSuccess:^(EDAMNotebook *notebook) {
+        EDAMNoteFilter* filter = [[EDAMNoteFilter alloc] init];
+        filter.notebookGuid = notebook.guid;
+        [notestore findNotesWithFilter:filter
+                                offset:0
+                              maxNotes:100
+                               success:^(EDAMNoteList *list) {
+                                   [[list notes] enumerateObjectsUsingBlock:^(EDAMNote* note, NSUInteger idx, BOOL *stop) {
+                                       [notestore getNoteApplicationDataEntryWithGuid:note.guid key:@"MyData" success:^(NSString *entry) {
+                                           // save the result
+                                       } failure:^(NSError *error) {
+                                           // error handling
+                                       }];
+                                   }];
+                               } failure:^(NSError *error) {
+                                   // error handling
+                               }];
+    } failure:^(NSError *error) {
+        // error handling
+    }];
+    
+    [[[[notestore getDefaultNotebookAsync] continueWithSuccessBlock:^id(BFTask *task) {
+        EDAMNotebook *notebook = task.result;
+        EDAMNoteFilter* filter = [[EDAMNoteFilter alloc] init];
+        filter.notebookGuid = notebook.guid;
+        return [notestore findNotesAsyncWithFilter:filter offset:0 maxNotes:100];
+    }] continueWithSuccessBlock:^id(BFTask *task) {
+        EDAMNoteList *list = task.result;
+        NSMutableArray* tasks = [NSMutableArray array];
+        [list.notes enumerateObjectsUsingBlock:^(EDAMNote* note, NSUInteger idx, BOOL *stop) {
+            BFTask* subtask = [[notestore getNoteApplicationDataEntryAsyncWithGuid:note.guid key:@"MyData"] continueWithSuccessBlock:^id(BFTask *task) {
+                // save the result
+                return nil;
+            }];
+            [tasks addObject:subtask];
+        }];
+        return [BFTask taskForCompletionOfAllTasks:tasks];
+    }] continueWithBlock:^id(BFTask *task) {
+        if (task.error) {
+            // error handling
+        } else if (task.exception) {
+            // exception handling
+        } else {
+            // task complete
+        }
+        return nil;
+    }];
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
