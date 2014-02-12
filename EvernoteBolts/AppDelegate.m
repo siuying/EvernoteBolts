@@ -15,6 +15,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     EvernoteNoteStore* notestore = [EvernoteNoteStore noteStore];
+    
+    // regular api
     [notestore getDefaultNotebookWithSuccess:^(EDAMNotebook *notebook) {
         EDAMNoteFilter* filter = [[EDAMNoteFilter alloc] init];
         filter.notebookGuid = notebook.guid;
@@ -36,6 +38,7 @@
         // error handling
     }];
     
+    // using bolts
     [[[[notestore getDefaultNotebookAsync] continueWithSuccessBlock:^id(BFTask *task) {
         EDAMNotebook *notebook = task.result;
         EDAMNoteFilter* filter = [[EDAMNoteFilter alloc] init];
