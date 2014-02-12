@@ -23,6 +23,7 @@
 		54C9D64318AA9623005E7EEB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 54C9D64118AA9623005E7EEB /* InfoPlist.strings */; };
 		54C9D64518AA9623005E7EEB /* EvernoteBoltsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 54C9D64418AA9623005E7EEB /* EvernoteBoltsTests.m */; };
 		54C9D65418AA97D7005E7EEB /* EvernoteNoteStore+BoltsAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 54C9D65318AA97D7005E7EEB /* EvernoteNoteStore+BoltsAdditions.m */; };
+		54C9D65718AB9EDE005E7EEB /* EvernoteSession+BoltsAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 54C9D65618AB9EDE005E7EEB /* EvernoteSession+BoltsAdditions.m */; };
 		6559ABD6C42E49C0B9DE0D96 /* libPods-EvernoteBoltsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F133D7C5037B48FEACDD2EF0 /* libPods-EvernoteBoltsTests.a */; };
 		E9F9DCEEFE354445BB23F76A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9060EA388B1E4EFB84E5F122 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,8 @@
 		54C9D64418AA9623005E7EEB /* EvernoteBoltsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EvernoteBoltsTests.m; sourceTree = "<group>"; };
 		54C9D65218AA97D7005E7EEB /* EvernoteNoteStore+BoltsAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EvernoteNoteStore+BoltsAdditions.h"; path = "Bolts/EvernoteNoteStore+BoltsAdditions.h"; sourceTree = "<group>"; };
 		54C9D65318AA97D7005E7EEB /* EvernoteNoteStore+BoltsAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EvernoteNoteStore+BoltsAdditions.m"; path = "Bolts/EvernoteNoteStore+BoltsAdditions.m"; sourceTree = "<group>"; };
+		54C9D65518AB9EDE005E7EEB /* EvernoteSession+BoltsAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EvernoteSession+BoltsAdditions.h"; path = "Bolts/EvernoteSession+BoltsAdditions.h"; sourceTree = "<group>"; };
+		54C9D65618AB9EDE005E7EEB /* EvernoteSession+BoltsAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EvernoteSession+BoltsAdditions.m"; path = "Bolts/EvernoteSession+BoltsAdditions.m"; sourceTree = "<group>"; };
 		9060EA388B1E4EFB84E5F122 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB4C5427C7274AFBA468B50B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F133D7C5037B48FEACDD2EF0 /* libPods-EvernoteBoltsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EvernoteBoltsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +179,8 @@
 			children = (
 				54C9D65218AA97D7005E7EEB /* EvernoteNoteStore+BoltsAdditions.h */,
 				54C9D65318AA97D7005E7EEB /* EvernoteNoteStore+BoltsAdditions.m */,
+				54C9D65518AB9EDE005E7EEB /* EvernoteSession+BoltsAdditions.h */,
+				54C9D65618AB9EDE005E7EEB /* EvernoteSession+BoltsAdditions.m */,
 			);
 			name = Bolts;
 			sourceTree = "<group>";
@@ -346,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54C9D63018AA9623005E7EEB /* ViewController.m in Sources */,
+				54C9D65718AB9EDE005E7EEB /* EvernoteSession+BoltsAdditions.m in Sources */,
 				54C9D62718AA9623005E7EEB /* AppDelegate.m in Sources */,
 				54C9D65418AA97D7005E7EEB /* EvernoteNoteStore+BoltsAdditions.m in Sources */,
 				54C9D62318AA9623005E7EEB /* main.m in Sources */,
