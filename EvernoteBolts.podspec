@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'MIT', :file => 'LICENSE.txt' }
   s.author             = { "Francis Chong" => "francis@ignition.hk" }
   s.social_media_url = "http://twitter.com/siuying"
-  s.platform     = :ios
+  s.platform     = :ios, '5.0'
 
   s.source       = { :git => "https://github.com/siuying/EvernoteBolts.git", :tag => s.version.to_s }
 
